@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>💌 Une question importante</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ff6f91, #ff9671);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.container {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  z-index: 2;
+}
+
+.container img {
+  width: 100%;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: 22px;
+}
+
+p {
+  font-size: 18px;
+}
+
+button {
+  padding: 12px 22px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #ccc;
+  position: absolute;
+  z-index: 3;
+}
+
+.rose {
+  position: absolute;
+  font-size: 24px;
+  animation: fall 6s linear infinite;
+}
+
+@keyframes fall {
+  0% { top: -10%; opacity: 1; }
+  100% { top: 110%; opacity: 0; }
+}
+</style>
+</head>
+
+<body onclick="playMusic()">
+
+<audio id="music" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <img src="photo.jpg" alt="Nous deux ❤️">
+  <h1 id="text"></h1>
+  <p>Veux-tu être ma Valentine ? 💖</p>
+  <button id="yes" onclick="yes()">Oui 💘</button>
+</div>
+
+<button id="no">Non 🙃</button>
+
+<script>
+/* TEXTE QUI S'ÉCRIT */
+const message = "J’ai quelque chose de très important à te demander...";
+let i = 0;
+function typeWriter() {
+  if (i < message.length) {
+    document.getElementById("text").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeWriter, 70);
+  }
+}
+typeWriter();
+
+/* MUSIQUE */
+let played = false;
+function playMusic() {
+  if (!played) {
+    document.getElementById("music").play();
+    played = true;
+  }
+}
+
+/* BOUTON NON QUI FUIT */
+const noBtn = document.getElementById("no");
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+});
+
+/* CLIQUE SUR OUI */
+function yes() {
+  document.body.innerHTML = `
+    <div style="color:white;text-align:center;">
+      <h1>YEESSS 💕🥰</h1>
+      <p>Rendez-vous le 14 février ❤️</p>
+      <p>J’ai trop hâte 😌</p>
+    </div>
+  `;
+}
+
+/* ROSES QUI TOMBENT */
+setInterval(() => {
+  const rose = document.createElement("div");
+  rose.className = "rose";
+  rose.innerHTML = "🌹";
+  rose.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(rose);
+  setTimeout(() => rose.remove(), 6000);
+}, 300);
+</script>
+
+</body>
+</html>
